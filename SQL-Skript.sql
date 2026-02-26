@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS studyorganizer;
+CREATE DATABASE studyorganizer;
+USE studyorganizer;
+
+
 CREATE TABLE Course(
     id INT AUTO_INCREMENT PRIMARY KEY,
     course_name varchar(255) NOT NULL
