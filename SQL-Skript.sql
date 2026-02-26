@@ -15,6 +15,13 @@ CREATE TABLE User(
     user_role varchar(255) NOT NULL
 );
 
+CREATE TABLE Teacher(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_name varchar(255) NOT NULL,
+    course_id INT NOT NULL,
+    is_active TINYINT(1) DEFAULT 1,
+);
+
 CREATE TABLE Assignment(
     id INT AUTO_INCREMENT PRIMARY KEY,
     title varchar(255) NOT NULL,
@@ -26,13 +33,6 @@ CREATE TABLE Assignment(
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (course_id) REFERENCES Course(id),
     FOREIGN KEY (teacher_id) REFERENCES Teacher(id)
-);
-
-CREATE TABLE Teacher(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    teacher_name varchar(255) NOT NULL,
-    course_id INT NOT NULL,
-    is_active TINYINT(1) DEFAULT 1,
 );
 
 CREATE TABLE Teacher_Course(
