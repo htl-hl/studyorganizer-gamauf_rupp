@@ -2,10 +2,16 @@ DROP DATABASE IF EXISTS studyorganizer;
 CREATE DATABASE studyorganizer;
 USE studyorganizer;
 
-
 CREATE TABLE Course(
     id INT AUTO_INCREMENT PRIMARY KEY,
     course_name varchar(255) NOT NULL
+);
+
+CREATE TABLE Teacher(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_name varchar(255) NOT NULL,
+    course_id INT NOT NULL,
+    is_active TINYINT(1) DEFAULT 1
 );
 
 CREATE TABLE User(
@@ -13,13 +19,6 @@ CREATE TABLE User(
     username varchar(255) NOT NULL UNIQUE,
     password_hash varchar(255) NOT NULL,
     user_role varchar(255) NOT NULL
-);
-
-CREATE TABLE Teacher(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    teacher_name varchar(255) NOT NULL,
-    course_id INT NOT NULL,
-    is_active TINYINT(1) DEFAULT 1,
 );
 
 CREATE TABLE Assignment(
@@ -30,6 +29,7 @@ CREATE TABLE Assignment(
     is_done TINYINT(1) DEFAULT 0,
     user_id INT NOT NULL,
     course_id INT NOT NULL,
+    teacher_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (course_id) REFERENCES Course(id),
     FOREIGN KEY (teacher_id) REFERENCES Teacher(id)
