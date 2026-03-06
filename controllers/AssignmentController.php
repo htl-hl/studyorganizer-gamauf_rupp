@@ -1,9 +1,10 @@
 <?php
-
 namespace app\controllers;
 
+use Yii;
 use app\models\Assignment;
 use app\models\AssignmentSearch;
+use app\models\Teacher;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -40,10 +41,12 @@ class AssignmentController extends Controller
     {
         $searchModel = new AssignmentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $courses = \app\models\Course::find()->all(); // oder dein Subject-Model
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
+            'courses'      => $courses,
         ]);
     }
 
@@ -68,18 +71,35 @@ class AssignmentController extends Controller
     public function actionCreate()
     {
         $model = new Assignment();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->user_id = Yii::$app->user->id;
+                if ($model->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    // Zeigt Validierungsfehler
+                    var_dump($model->errors);
+                    die();
+                }
             }
-        } else {
-            $model->loadDefaultValues();
         }
+        return $this->redirect(['index']);
+    }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+// 2. Neue Action für AJAX
+    public function actionTeachersByCourse($course_id)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $teachers = Teacher::find()
+            ->join('INNER JOIN', 'Teacher_Course', 'Teacher_Course.teacher_id = Teacher.id')
+            ->where(['Teacher_Course.course_id' => (int)$course_id])
+            ->all();
+
+        return array_map(fn($t) => [
+            'id'   => $t->id,
+            'name' => $t->teacher_name,
+        ], $teachers);
     }
 
     /**
@@ -97,9 +117,7 @@ class AssignmentController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['index']);
     }
 
     /**

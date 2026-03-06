@@ -40,10 +40,12 @@ class TeacherController extends Controller
     {
         $searchModel = new TeacherSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $courses = \app\models\Course::find()->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
+            'courses'      => $courses,
         ]);
     }
 
@@ -65,41 +67,44 @@ class TeacherController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+    // actionCreate – redirect zu index statt view
     public function actionCreate()
     {
         $model = new Teacher();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+                // Eintrag in Teacher_Course anlegen
+                $tc = new \app\models\Teacher_Course();
+                $tc->teacher_id = $model->id;
+                $tc->course_id  = $model->course_id;
+                $tc->save();
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+                return $this->redirect(['index']);
+            }
+        }
+        return $this->redirect(['index']);
     }
 
-    /**
-     * Updates an existing Teacher model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldCourseId = $model->course_id;
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            // Teacher_Course aktualisieren falls Course geändert wurde
+            if ($oldCourseId != $model->course_id) {
+                \app\models\Teacher_Course::deleteAll([
+                    'teacher_id' => $model->id,
+                    'course_id'  => $oldCourseId,
+                ]);
+                $tc = new \app\models\Teacher_Course();
+                $tc->teacher_id = $model->id;
+                $tc->course_id  = $model->course_id;
+                $tc->save();
+            }
+            return $this->redirect(['index']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['index']);
     }
 
     /**
