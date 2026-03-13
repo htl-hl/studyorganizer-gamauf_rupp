@@ -86,3 +86,457 @@ a.desc:after {
 .form-group {
     margin-bottom: 1rem;
 }
+
+.course-page { padding: 2rem 0 4rem; }
+
+.course-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.course-header__titles h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 .2rem;
+    letter-spacing: -.5px;
+}
+.course-header__titles p { color: #64748b; margin: 0; font-size: .95rem; }
+
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: .6rem 1.2rem;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+}
+.btn-add:hover { background: #1e293b; color: #fff; transform: translateY(-1px); }
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.1rem;
+}
+
+.card-add {
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+.card-add:hover { border-color: #94a3b8; background: #f8fafc; }
+.card-add__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    color: #94a3b8;
+}
+.card-add__icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+}
+.card-add__label { font-size: .85rem; font-weight: 500; }
+
+.course-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    transition: box-shadow .2s, transform .15s;
+}
+.course-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+
+.course-card__icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+}
+.course-card__name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin: 0;
+}
+.course-card__meta {
+    font-size: .78rem;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    gap: .18rem;
+}
+.course-card__meta span { display: flex; align-items: center; gap: .3rem; }
+
+.course-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .3rem;
+}
+
+.badge-count {
+    font-size: .7rem; padding: .25rem .6rem; border-radius: 20px;
+    font-weight: 600; background: #eff6ff; color: #3b82f6;
+}
+
+.course-card__actions { display: flex; gap: .35rem; }
+.course-card__actions a,
+.course-card__actions button {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background .15s;
+    color: #475569;
+    text-decoration: none;
+    padding: 0;
+}
+.course-card__actions a:hover,
+.course-card__actions button:hover { background: #e2e8f0; color: #0f172a; }
+.course-card__actions .btn-delete:hover { background: #fee2e2; color: #ef4444; border-color: #fecaca; }
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #94a3b8;
+}
+.empty-state__icon { font-size: 3rem; margin-bottom: .75rem; }
+
+.modal-content { border-radius: 16px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+.modal-header { border-bottom: 1px solid #f1f5f9; padding: 1.25rem 1.5rem .9rem; }
+.modal-title { font-weight: 700; font-size: 1.05rem; color: #0f172a; }
+.modal-body { padding: 1.25rem 1.5rem; }
+.modal-footer { border-top: 1px solid #f1f5f9; padding: .9rem 1.5rem; }
+
+.form-label { font-size: .82rem; font-weight: 600; color: #374151; margin-bottom: .3rem; }
+.form-control, .form-select {
+    border-radius: 9px; border: 1px solid #e2e8f0;
+    font-size: .9rem; padding: .55rem .8rem;
+    transition: border-color .2s, box-shadow .2s;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #0f172a;
+    box-shadow: 0 0 0 3px rgba(15,23,42,.08);
+}
+
+.btn-save {
+    background: #0f172a; color: #fff; border: none;
+    border-radius: 9px; padding: .6rem 1.4rem;
+    font-weight: 600; font-size: .9rem; transition: background .2s;
+}
+.btn-save:hover { background: #1e293b; color: #fff; }
+
+.btn-cancel-modal {
+    background: transparent; border: 1px solid #e2e8f0;
+    border-radius: 9px; padding: .6rem 1.1rem;
+    font-size: .9rem; color: #64748b; transition: background .15s;
+}
+.btn-cancel-modal:hover { background: #f1f5f9; }
+/* ═══════════════════════════════════════════════════════════
+   SHARED CARD/PAGE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Shared Page Headers ─────────────────────────────────── */
+.asgn-page, .teacher-page { padding: 2rem 0 4rem; }
+
+.asgn-header, .teacher-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.asgn-header__titles h1,
+.teacher-header__titles h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 .2rem;
+    letter-spacing: -.5px;
+}
+.asgn-header__titles p,
+.teacher-header__titles p { color: #64748b; margin: 0; font-size: .95rem; }
+
+/* ── Shared Grid ─────────────────────────────────────────── */
+.asgn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.1rem;
+}
+.teacher-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.1rem;
+}
+
+/* ── Assignment Cards ────────────────────────────────────── */
+.asgn-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    transition: box-shadow .2s, transform .15s;
+}
+.asgn-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+.asgn-card--done { opacity: .6; }
+.asgn-card--done .asgn-card__title { text-decoration: line-through; color: #94a3b8; }
+
+.asgn-card__title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.35;
+    padding-right: 1.5rem;
+}
+.asgn-card__meta {
+    font-size: .78rem;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    gap: .18rem;
+}
+.asgn-card__meta span { display: flex; align-items: center; gap: .3rem; }
+.asgn-card__due { font-size: .78rem; font-weight: 600; color: #ef4444; }
+.asgn-card__due--ok { color: #22c55e; }
+.asgn-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .3rem;
+}
+
+/* ── Teacher Cards ───────────────────────────────────────── */
+.teacher-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    transition: box-shadow .2s, transform .15s;
+}
+.teacher-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+.teacher-card--inactive { opacity: .55; }
+
+.teacher-card__top { display: flex; align-items: center; gap: .85rem; }
+.teacher-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: 2px solid #e2e8f0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #475569;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+.teacher-card__name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.3;
+}
+.teacher-card__meta {
+    font-size: .78rem;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    gap: .18rem;
+}
+.teacher-card__meta span { display: flex; align-items: center; gap: .3rem; }
+.teacher-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .3rem;
+}
+
+/* ── Shared Badges ───────────────────────────────────────── */
+.badge-done {
+    font-size: .7rem; padding: .25rem .6rem; border-radius: 20px;
+    font-weight: 600; background: #dcfce7; color: #16a34a;
+}
+.badge-pending {
+    font-size: .7rem; padding: .25rem .6rem; border-radius: 20px;
+    font-weight: 600; background: #fef9c3; color: #ca8a04;
+}
+.badge-active {
+    font-size: .7rem; padding: .25rem .6rem; border-radius: 20px;
+    font-weight: 600; background: #dcfce7; color: #16a34a;
+}
+.badge-inactive {
+    font-size: .7rem; padding: .25rem .6rem; border-radius: 20px;
+    font-weight: 600; background: #f1f5f9; color: #64748b;
+}
+
+/* ── Shared Card Actions ─────────────────────────────────── */
+.asgn-card__actions,
+.teacher-card__actions,
+.course-card__actions { display: flex; gap: .35rem; }
+
+.asgn-card__actions a,   .asgn-card__actions button,
+.teacher-card__actions a,.teacher-card__actions button,
+.course-card__actions a, .course-card__actions button {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background .15s;
+    color: #475569;
+    text-decoration: none;
+    padding: 0;
+}
+.asgn-card__actions a:hover,    .asgn-card__actions button:hover,
+.teacher-card__actions a:hover, .teacher-card__actions button:hover,
+.course-card__actions a:hover,  .course-card__actions button:hover {
+    background: #e2e8f0; color: #0f172a;
+}
+.btn-delete:hover { background: #fee2e2 !important; color: #ef4444 !important; border-color: #fecaca !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH PAGE (LOGIN / REGISTER)
+   ═══════════════════════════════════════════════════════════ */
+
+.auth-page {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.auth-hero {
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+}
+
+.auth-hero__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.auth-hero__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 .5rem;
+    letter-spacing: -.5px;
+}
+
+.auth-hero__sub {
+    color: #64748b;
+    font-size: .95rem;
+    margin: 0 0 2rem;
+}
+
+.auth-hero__actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-auth-primary {
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: .7rem 1.8rem;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+}
+.btn-auth-primary:hover { background: #1e293b; transform: translateY(-1px); }
+
+.btn-auth-secondary {
+    background: transparent;
+    color: #0f172a;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: .7rem 1.8rem;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, border-color .2s, transform .15s;
+}
+.btn-auth-secondary:hover { background: #f8fafc; border-color: #94a3b8; transform: translateY(-1px); }
+
+.auth-error {
+    margin-top: 1rem;
+    background: #fee2e2;
+    border-radius: 10px;
+    padding: .7rem 1rem;
+    color: #ef4444;
+    font-size: .85rem;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.auth-field-error {
+    color: #ef4444;
+    font-size: .78rem;
+    margin-top: .25rem;
+    display: block;
+}
+
+.auth-switch {
+    font-size: .82rem;
+    color: #64748b;
+}
+.auth-switch a {
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: none;
+}
+.auth-switch a:hover { text-decoration: underline; }
+
+.auth-flash {
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 10px;
+    padding: .75rem 1.2rem;
+    font-size: .9rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}

@@ -8,13 +8,11 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
+use app\models\RegisterForm;
 use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -38,77 +36,62 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        $loginModel    = new LoginForm();
+        $registerModel = new RegisterForm();
+
+        // Handle login
+        if (Yii::$app->request->isPost && Yii::$app->request->post('action') === 'login') {
+            if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
+                return $this->goBack();
+            }
+            $loginModel->password = '';
         }
 
-        $model->password = '';
+        // Handle register
+        if (Yii::$app->request->isPost && Yii::$app->request->post('action') === 'register') {
+            if ($registerModel->load(Yii::$app->request->post()) && $registerModel->register()) {
+                Yii::$app->session->setFlash('success', 'Account created! You can now log in.');
+                return $this->redirect(['login']);
+            }
+        }
+
         return $this->render('login', [
-            'model' => $model,
+            'loginModel'    => $loginModel,
+            'registerModel' => $registerModel,
         ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
     public function actionContact()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
         return $this->render('contact', [
@@ -116,11 +99,6 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
     public function actionAbout()
     {
         return $this->render('about');

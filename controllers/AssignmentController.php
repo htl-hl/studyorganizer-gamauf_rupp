@@ -86,7 +86,6 @@ class AssignmentController extends Controller
         return $this->redirect(['index']);
     }
 
-// 2. Neue Action für AJAX
     public function actionTeachersByCourse($course_id)
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
