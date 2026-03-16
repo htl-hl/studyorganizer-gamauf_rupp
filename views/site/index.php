@@ -20,18 +20,18 @@ $role = $user ? $user->user_role : '';
 
     <div class="dashboard-grid">
 
-        <!-- Assignments -->
-        <a href="/assignment" class="dashboard-card">
-            <div class="dashboard-card__icon">📋</div>
-            <div class="dashboard-card__name">Assignments</div>
-            <div class="dashboard-card__desc">Create, edit and view assignments for your subjects.</div>
-        </a>
-
         <!-- Teachers -->
         <a href="/teacher" class="dashboard-card">
             <div class="dashboard-card__icon">👨‍🏫</div>
             <div class="dashboard-card__name">Teachers</div>
             <div class="dashboard-card__desc">View a list of all teachers and the subjects they're teaching.</div>
+        </a>
+
+        <!-- Assignments -->
+        <a href="/assignment" class="dashboard-card">
+            <div class="dashboard-card__icon">📋</div>
+            <div class="dashboard-card__name">Assignments</div>
+            <div class="dashboard-card__desc">Create, edit and view assignments for your subjects.</div>
         </a>
 
         <!-- Subjects / Courses -->
