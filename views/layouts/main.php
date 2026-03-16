@@ -32,16 +32,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+            'brandLabel' => 'StudyOrganizer',
+            'brandUrl' => Yii::$app->homeUrl,
+            'innerContainerOptions' => ['class' => 'container-fluid'],  // 👈 full width
+            'options' => [
+                    'class' => 'navbar navbar-expand-lg',
+            ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
                 ['label' => 'Teacher', 'url' => ['/teacher/index']],
             ['label' => 'Assignment', 'url' => ['/assignment/index']],
             ['label' => 'Course', 'url' => ['/course/index']],
