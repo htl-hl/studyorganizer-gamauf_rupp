@@ -2,52 +2,45 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = 'Dashboard';
+
+$user = Yii::$app->user->identity;
+$username = $user ? $user->username : 'Guest';
+$role = $user ? $user->user_role : '';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
+<div class="dashboard-page">
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
+    <div class="dashboard-hero">
+        <h1 class="dashboard-hero__title">Welcome, <?= htmlspecialchars($username) ?>!</h1>
+        <p class="dashboard-hero__sub">You're logged in as <span class="dashboard-role"><?= htmlspecialchars($role) ?></span></p>
     </div>
 
-    <div class="body-content">
+    <p class="dashboard-section-label">Here are some things to do:</p>
 
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
+    <div class="dashboard-grid">
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+        <!-- Assignments -->
+        <a href="/assignment" class="dashboard-card">
+            <div class="dashboard-card__icon">📋</div>
+            <div class="dashboard-card__name">Assignments</div>
+            <div class="dashboard-card__desc">Create, edit and view assignments for your subjects.</div>
+        </a>
 
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
+        <!-- Teachers -->
+        <a href="/teacher" class="dashboard-card">
+            <div class="dashboard-card__icon">👨‍🏫</div>
+            <div class="dashboard-card__name">Teachers</div>
+            <div class="dashboard-card__desc">View a list of all teachers and the subjects they're teaching.</div>
+        </a>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
+        <!-- Subjects / Courses -->
+        <a href="/course" class="dashboard-card">
+            <div class="dashboard-card__icon">📚</div>
+            <div class="dashboard-card__name">Subjects</div>
+            <div class="dashboard-card__desc">Here's an overview of all subjects.</div>
+        </a>
 
     </div>
+
 </div>

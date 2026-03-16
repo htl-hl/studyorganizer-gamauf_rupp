@@ -1,0 +1,103 @@
+/* ═══════════════════════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════════════════════ */
+
+.navbar {
+    background-color: #0f172a;
+    padding: .75rem 1.25rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .15);
+}
+
+/* Brand / Logo */
+.navbar-brand {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff !important;
+    letter-spacing: -.4px;
+    transition: opacity .2s;
+}
+.navbar-brand:hover { opacity: .85; }
+
+/* Nav links */
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, .65) !important;
+    font-size: .88rem;
+    font-weight: 500;
+    padding: .45rem .9rem !important;
+    border-radius: 8px;
+    transition: color .2s, background .2s;
+}
+.navbar-nav .nav-link:hover {
+    color: #fff !important;
+    background: rgba(255, 255, 255, .08);
+}
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-link.active {
+    color: #fff !important;
+    background: rgba(255, 255, 255, .12);
+}
+
+/* Hamburger toggler */
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 8px;
+    padding: .35rem .6rem;
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.75)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(255, 255, 255, .1); }
+
+/* Logout button inside navbar */
+.nav li > form > button.logout {
+    color: rgba(255, 255, 255, .65);
+    font-size: .88rem;
+    font-weight: 500;
+    padding: .45rem .9rem;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    transition: color .2s, background .2s;
+    cursor: pointer;
+}
+.nav li > form > button.logout:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, .08);
+    text-decoration: none;
+}
+.nav li > form > button.logout:focus { outline: none; }
+
+/* Dropdown menu */
+.navbar-nav .dropdown-menu {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 10px;
+    padding: .4rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+    margin-top: .35rem;
+}
+.navbar-nav .dropdown-item {
+    color: rgba(255, 255, 255, .7);
+    font-size: .88rem;
+    border-radius: 7px;
+    padding: .45rem .85rem;
+    transition: background .15s, color .15s;
+}
+.navbar-nav .dropdown-item:hover,
+.navbar-nav .dropdown-item:focus {
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+.navbar-nav .dropdown-divider { border-color: rgba(255, 255, 255, .08); }
+
+/* Mobile */
+@media (max-width: 767px) {
+    .navbar-nav { padding: .5rem 0; }
+    .navbar-nav .nav-link { padding: .55rem .75rem !important; }
+    .nav li > form > button.logout {
+        display: block;
+        text-align: left;
+        width: 100%;
+        padding: .55rem .75rem;
+    }
+}
