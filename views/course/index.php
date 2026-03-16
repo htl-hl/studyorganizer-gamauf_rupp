@@ -57,7 +57,10 @@ $courses = $dataProvider->getModels();
                 <?php
                 $teacherCount = count($course->teachers ?? []);
                 ?>
-                <div class="course-card">
+                <div class="course-card" style="cursor:pointer"
+                     onclick="showTeachers(<?= $course->id ?>, '<?= Html::encode(addslashes($course->course_name)) ?>', <?= htmlspecialchars(json_encode(
+                             array_map(fn($t) => $t->teacher_name, $course->teachers ?? []), ENT_QUOTES
+                     )) ?>)">
 
                     <div class="course-card__icon">📖</div>
                     <p class="course-card__name"><?= Html::encode($course->course_name) ?></p>
@@ -79,8 +82,6 @@ $courses = $dataProvider->getModels();
                         <div class="course-card__actions">
                             <?php if ($isAdmin): ?>
                                 <a href="#" title="Edit"
-                                   data-bs-toggle="modal"
-                                   data-bs-target="#courseModal"
                                    onclick="openEditModal(<?= $course->id ?>, <?= htmlspecialchars(json_encode([
                                            'course_name' => $course->course_name,
                                    ]), ENT_QUOTES) ?>); return false;">
@@ -91,7 +92,7 @@ $courses = $dataProvider->getModels();
                                     </svg>
                                 </a>
 
-                                <?= Html::beginForm(Url::to(['course/delete', 'id' => $course->id]), 'post', ['style' => 'display:inline']) ?>
+                                <?= Html::beginForm(Url::to(['course/delete', 'id' => $course->id]), 'post', ['style' => 'display:inline', 'onclick' => 'event.stopPropagation()']) ?>
                                 <?= Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken()) ?>
                                 <button type="submit" class="btn-delete" title="Delete"
                                         onclick="return confirm('Delete this subject?')">
@@ -141,6 +142,23 @@ $courses = $dataProvider->getModels();
     </div>
 </div>
 
+<!-- Teacher List Popup -->
+<div class="modal fade" id="teacherListModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="teacherListModalLabel">Teachers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="teacherListBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel-modal" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const urlCourseCreate = '<?= Url::to(['course/create']) ?>';
     const urlCourseUpdate = (id) =>
@@ -150,11 +168,32 @@ $courses = $dataProvider->getModels();
         document.getElementById('courseModalLabel').textContent = 'New Subject';
         document.getElementById('course-form').action = urlCourseCreate;
         document.getElementById('modal-course-name').value = '';
+        // stop click from bubbling to card
+        event.stopPropagation();
+        new bootstrap.Modal(document.getElementById('courseModal')).show();
     }
 
     function openEditModal(id, data) {
+        event.stopPropagation();
         document.getElementById('courseModalLabel').textContent = 'Edit Subject';
         document.getElementById('course-form').action = urlCourseUpdate(id);
         document.getElementById('modal-course-name').value = data.course_name ?? '';
+        new bootstrap.Modal(document.getElementById('courseModal')).show();
+    }
+
+    function showTeachers(courseId, courseName, teachers) {
+        document.getElementById('teacherListModalLabel').textContent = courseName + ' – Teachers';
+        const body = document.getElementById('teacherListBody');
+        if (!teachers || teachers.length === 0) {
+            body.innerHTML = '<p class="empty-teacher-msg">No teachers assigned yet.</p>';
+        } else {
+            body.innerHTML = teachers.map(name => `
+                <div class="teacher-list-item">
+                    <div class="teacher-list-avatar">${name.charAt(0).toUpperCase()}</div>
+                    <span class="teacher-list-name">${name}</span>
+                </div>
+            `).join('');
+        }
+        new bootstrap.Modal(document.getElementById('teacherListModal')).show();
     }
 </script>
