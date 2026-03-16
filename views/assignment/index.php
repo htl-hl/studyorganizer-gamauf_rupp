@@ -150,7 +150,8 @@ $assignments = $dataProvider->getModels();
                     <div>
                         <label class="form-label" for="modal-title">Title</label>
                         <input type="text" id="modal-title" name="Assignment[title]"
-                               class="form-control" placeholder="e.g. Solve this equation" required>
+                               class="form-control" placeholder="e.g. Solve this equation">
+                        <div class="invalid-feedback">Please enter a title.</div>
                     </div>
 
                     <!-- Subject / Course -->
@@ -164,6 +165,7 @@ $assignments = $dataProvider->getModels();
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </select>
+                        <div class="invalid-feedback">Please select a subject.</div>
                     </div>
 
                     <!-- Teacher (dynamisch je nach Course) -->
@@ -172,12 +174,14 @@ $assignments = $dataProvider->getModels();
                         <select id="modal-teacher" name="Assignment[teacher_id]" class="form-select">
                             <option value="">— Select subject first —</option>
                         </select>
+                        <div class="invalid-feedback">Please select a teacher.</div>
                     </div>
 
                     <!-- Due Date -->
                     <div>
                         <label class="form-label" for="modal-due-date">Due on</label>
                         <input type="date" id="modal-due-date" name="Assignment[due_date]" class="form-control">
+                        <div class="invalid-feedback">Please select a due date.</div>
                     </div>
 
                     <!-- Done toggle -->
@@ -237,6 +241,7 @@ $assignments = $dataProvider->getModels();
         document.getElementById('modal-teacher').innerHTML = '<option value="">— Select subject first —</option>';
         document.getElementById('modal-due-date').value = '';
         document.getElementById('modal-is-done').checked = false;
+        document.getElementById('assignment-form').querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
     }
 
     function openEditModal(id, data) {
@@ -246,6 +251,39 @@ $assignments = $dataProvider->getModels();
         document.getElementById('modal-course').value   = data.course_id ?? '';
         document.getElementById('modal-due-date').value = data.due_date  ?? '';
         document.getElementById('modal-is-done').checked = !!parseInt(data.is_done);
+        document.getElementById('assignment-form').querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
         loadTeachers(data.course_id, data.teacher_id);
     }
+
+    document.getElementById('assignment-form').addEventListener('submit', function(e) {
+        let valid = true;
+
+        const fields = [
+            { id: 'modal-title',    check: v => v.trim() !== '' },
+            { id: 'modal-course',   check: v => v !== '' },
+            { id: 'modal-teacher',  check: v => v !== '' },
+            { id: 'modal-due-date', check: v => v !== '' },
+        ];
+
+        fields.forEach(({ id, check }) => {
+            const el = document.getElementById(id);
+            if (!check(el.value)) {
+                el.classList.add('is-invalid');
+                valid = false;
+            } else {
+                el.classList.remove('is-invalid');
+            }
+        });
+
+        if (!valid) e.preventDefault();
+    });
+
+    ['modal-title', 'modal-course', 'modal-teacher', 'modal-due-date'].forEach(id => {
+        document.getElementById(id)?.addEventListener('change', function() {
+            this.classList.remove('is-invalid');
+        });
+        document.getElementById(id)?.addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+        });
+    });
 </script>
